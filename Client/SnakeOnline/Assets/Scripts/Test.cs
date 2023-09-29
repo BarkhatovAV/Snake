@@ -21,8 +21,6 @@ public class Test : MonoBehaviour
                 Destroy(_controller);
             }
 
-
-
             _snake = Instantiate(_snakePrafab);
             _snake.Init(_detailCount);
             _controller = Instantiate(_controllerPrefab);

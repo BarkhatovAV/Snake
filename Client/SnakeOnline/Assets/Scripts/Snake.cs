@@ -32,6 +32,8 @@ public class Snake : MonoBehaviour
 
     private void Rotate()
     {
+        if (_targetDirection == Vector3.zero)
+            return;
         Quaternion targetRotation = Quaternion.LookRotation(_targetDirection);
         _head.rotation = Quaternion.RotateTowards(_head.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
         //float diffY = _directionPoint.eulerAngles.y - _head.eulerAngles.y;
