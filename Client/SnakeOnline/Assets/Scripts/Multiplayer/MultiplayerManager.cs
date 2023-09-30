@@ -91,17 +91,23 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     #endregion
 
     #region Player
-
+    [SerializeField] private PlayerAim _playerAim;
     [SerializeField] private Controller _controllerPrefab;
     [SerializeField] private Snake _snakePrafab;
 
     private void CreatePlayer(Player player)
     {
         Vector3 position = new Vector3(player.x, 0, player.z);
+        Quaternion quaternion = Quaternion.identity;
+
         Snake snake = Instantiate(_snakePrafab, position, Quaternion.identity);
         snake.Init(player.d);
+
+        PlayerAim aim = Instantiate(_playerAim, position, Quaternion.identity);
+        aim.Init(snake.Speed);
+
         Controller controller = Instantiate(_controllerPrefab);
-        controller.Init(snake);
+        controller.Init(aim, player, snake);
     }
     #endregion
 }

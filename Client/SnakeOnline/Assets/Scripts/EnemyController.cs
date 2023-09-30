@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
 
     public void Init(Player player, Snake snake)
     {
+        _snake = snake;
         _player = player;
         player.OnChange += OnChange;
     }
@@ -28,7 +29,7 @@ public class EnemyController : MonoBehaviour
                     position.x = (float)changes[i].Value; 
                     break;
                 case "z":
-                    position.x = (float)changes[i].Value;
+                    position.z = (float)changes[i].Value;
                     break;
                 case "d":
                     _snake.SetDetailCount((byte)changes[i].Value);
