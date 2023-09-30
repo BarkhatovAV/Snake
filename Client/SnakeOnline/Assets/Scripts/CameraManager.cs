@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    private void Start()
+    public void Init(float offsetY)
     {
         Transform camera = Camera.main.transform;
         camera.parent = transform;
-        camera.localPosition = Vector3.zero;
+        camera.localPosition = Vector3.up * offsetY;
     }
 
     private void OnDestroy()
@@ -16,5 +17,10 @@ public class CameraManager : MonoBehaviour
 
         Transform camera = Camera.main.transform;
         camera.parent = null;
+    }
+
+    internal void Init(object cameraOffsetY)
+    {
+        throw new NotImplementedException();
     }
 }

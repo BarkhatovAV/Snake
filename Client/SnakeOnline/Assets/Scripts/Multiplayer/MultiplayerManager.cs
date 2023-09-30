@@ -53,16 +53,40 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         _room?.Leave();
 
     }
+
+    public void SendMessage(string key, Dictionary<string, object> data)
+    {
+        _room.Send(key, data);
+    }
     #endregion
 
     #region Enemy
 
+    Dictionary<string, EnemyController> _enemies = new Dictionary<string, EnemyController>();
+
     private void CreateEnemy(string key, Player player)
     {
+        Vector3 position = new Vector3(player.x, 0, player.z);
+        Snake snake = Instantiate(_snakePrafab, position, Quaternion.identity);
+        snake.Init(player.d);
+
+        EnemyController enemy = snake.gameObject.AddComponent<EnemyController>();
+        enemy.Init(player, snake);
+
+        _enemies.Add(key, enemy);
     }
 
     private void RemoveEnemy(string key, Player player)
     {
+        if(_enemies.ContainsKey(key) == false)
+        {
+            Debug.LogError("Try remove enemy");
+        }
+
+        EnemyController enemy = _enemies[key];
+        _enemies.Remove(key);
+        enemy.Destroy();
+
     }
     #endregion
 
@@ -73,7 +97,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     private void CreatePlayer(Player player)
     {
-        Snake snake = Instantiate(_snakePrafab);
+        Vector3 position = new Vector3(player.x, 0, player.z);
+        Snake snake = Instantiate(_snakePrafab, position, Quaternion.identity);
         snake.Init(player.d);
         Controller controller = Instantiate(_controllerPrefab);
         controller.Init(snake);

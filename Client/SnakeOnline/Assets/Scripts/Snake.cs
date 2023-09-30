@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Snake : MonoBehaviour
@@ -49,14 +50,29 @@ public class Snake : MonoBehaviour
         //_head.Rotate(0, rotateY, 0);
     }
 
+    public void SetDetailCount(int detailCount)
+    {
+        _tail.SetDetailCount(detailCount);
+    }
+
     private void Move()
     {
         transform.position += _head.forward * Time.deltaTime * _speed;
     }
 
-    public void LookAt(Vector3 cursorPosition)
+    public void SetRotation(Vector3 pointToLook)
+    {
+
+    }
+
+    public void LerpRotation(Vector3 cursorPosition)
     {
         _targetDirection = cursorPosition - _head.position;
         //_directionPoint.LookAt(cursorPosition);
+    }
+
+    public void GetMoveInfo(out Vector3 position)
+    {
+        position = transform.position;
     }
 }
